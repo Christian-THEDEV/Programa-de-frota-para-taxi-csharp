@@ -1,4 +1,4 @@
-﻿using System.Collections;
+using System.Collections;
 
 namespace Programa_frota_de_taxi
 {
@@ -8,7 +8,7 @@ namespace Programa_frota_de_taxi
         {
             //declaração de variáveis e vetor
             double[] carros = new double[20];
-            int opc_user;
+            char opc_user;
             int ncarro=0;
             double carroComMenorValor;
 
@@ -31,14 +31,14 @@ namespace Programa_frota_de_taxi
                 Console.WriteLine("|5 - Zerar o faturamento                 |");
                 Console.WriteLine("|0 - Finalizar                           |\n");
                 Console.Write("Sua opção: ");
-                opc_user = int.Parse(Console.ReadLine());
+                opc_user = Console.ReadKey().KeyChar;
             
 
             //switchcase com as opçoes do usuário
             switch (opc_user)
             {
                 //opção de lançamento de corrida
-                case 1:
+                case '1':
                     Console.Clear();
                     Console.WriteLine("==========================");
                     Console.WriteLine($" {"TAXI",-5} | {"R$",10} ");
@@ -49,12 +49,21 @@ namespace Programa_frota_de_taxi
                     { 
                         Console.WriteLine($" {i+1,-5} | {carros[i].ToString("C"),10} ");
                     }
+                    for(int i=0;i<20;i++)
+                        {
+                            total+=carros[i];
+                        }
+                    Console.WriteLine($" {"Total",-5} | {"{0}",10} ",total.ToString("C"));
                 //informar o N° do carro e se o usuário colocar um negativo ou 0, deverá por o valor novamente.
 
                     do{
                     Console.Write("informe o n° do carro: ");
                     ncarro = int.Parse(Console.ReadLine());
-                    }while(ncarro<=0);
+                    if((ncarro<1) || (ncarro>20))
+                            {
+                                Console.WriteLine("Opção Incorreta! Tente Novamente");
+                            }
+                    }while(ncarro<=0 || ncarro >20);
 
                 //diminuir -1 para evitar erro
                     ncarro = ncarro - 1;
@@ -74,7 +83,7 @@ namespace Programa_frota_de_taxi
 
                     break;
 
-                    case 2:
+                    case '2':
                     Console.Clear();
                     Console.WriteLine("==========================");
                     Console.WriteLine($" {"TAXI",-5} | {"R$",10} ");
@@ -96,7 +105,7 @@ namespace Programa_frota_de_taxi
                     break;
 
 
-                    case 3:
+                    case '3':
                     valormaiormenor = 999999.00; 
                     carroComMenorValor = 0;
                     //ver o carro com o menor faturamento
@@ -124,7 +133,7 @@ namespace Programa_frota_de_taxi
                     break;
                     
 
-                    case 4:
+                    case '4':
                         {
                     valormaiormenor = 0; 
                     carroComMenorValor = 0;
@@ -154,7 +163,7 @@ namespace Programa_frota_de_taxi
                     }
 
 
-                    case 5:
+                    case '5':
                         {
                             // zerar o valor dos carros
                             for(int i=0;i<20;i++)
@@ -167,8 +176,23 @@ namespace Programa_frota_de_taxi
                             Console.ReadKey();
                             break;
                         }
-            }   
-            } while (opc_user != 0);
+                        case '0':
+                        {
+                            Thread.Sleep(1000);
+                            Console.Clear();
+                            Console.WriteLine("Encerrando... Tenha um bom dia!");
+                            break;
+                        }
+                    default:
+                        {
+                        Console.Clear();
+                        Console.WriteLine("Opção Invalida!");
+                        Console.WriteLine("Pressione qualquer tecla para tentar novamente!");
+                        Console.ReadLine();
+                        break;
+                        }  
+            }  
+            } while (opc_user != '0');
         }
     }
 }
